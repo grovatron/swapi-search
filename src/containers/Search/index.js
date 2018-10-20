@@ -26,6 +26,7 @@ class Search extends Component {
   //     .then(json => this.setState({films: json.results}));
   // }
 
+//TODO:Fix bugs associated with slow fetching
   onSearchInputChange = event => {
     this.setState({searchValue: event.target.value});
     if (event.target.value !== '') {
