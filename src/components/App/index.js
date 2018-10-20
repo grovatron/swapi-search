@@ -6,6 +6,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <h1 id="App-title">SWAPI Search</h1>
         </header>
       </div>
     );
