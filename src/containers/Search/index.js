@@ -5,6 +5,7 @@ import PlanetsList from '../../components/Lists/PlanetsList';
 import SpeciesList from '../../components/Lists/SpeciesList';
 import StarshipsList from '../../components/Lists/StarshipsList';
 import VehiclesList from '../../components/Lists/VehiclesList';
+import Loader from '../../components/Loader';
 
 const SWAPI_BASE = 'https://swapi.co/api/';
 
@@ -104,7 +105,7 @@ class Search extends Component {
           type='text'
           placeholder='Search films, people, planets, etc.'
           onChange={this.onSearchInputChange} />
-        {isFetching && <p>Loading... </p>}
+        {isFetching && <Loader />}
         {
           !isFetching &&
           <div>
