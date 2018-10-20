@@ -79,12 +79,12 @@ class Search extends Component {
           type='text'
           placeholder='Search films, people, planets, etc.'
           onChange={this.onSearchInputChange} />
-        <FilmsList films={films}/>
-        <PeopleList people={people}/>
-        <PlanetsList planets={planets}/>
-        <SpeciesList species={species}/>
-        <StarshipsList starships={starships}/>
-        <VehiclesList vehicles={vehicles}/>
+        {films.length !== 0 && <FilmsList films={films}/>}
+        {people.length !== 0 && <PeopleList people={people}/>}
+        {planets.length !== 0 && <PlanetsList planets={planets}/>}
+        {species.length !== 0 && <SpeciesList species={species}/>}
+        {starships.length !== 0 && <StarshipsList starships={starships}/>}
+        {vehicles.length !== 0 && <VehiclesList vehicles={vehicles}/>}
       </div>
     )
   }
