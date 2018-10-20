@@ -14,14 +14,17 @@ class Search extends Component {
     searchValue: '',
   }
 
-  componentDidMount() {
-    fetch(`${SWAPI_BASE}films/?search=l`)
-      .then(response => response.json())
-      .then(json => this.setState({films: json.results}));
-  }
+  // componentDidMount() {
+  //   fetch(`${SWAPI_BASE}films/?search=l`)
+  //     .then(response => response.json())
+  //     .then(json => this.setState({films: json.results}));
+  // }
 
   onSearchInputChange = event => {
     this.setState({searchValue: event.target.value});
+    fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
+      .then(response => response.json())
+      .then(json => this.setState({films: json.results}));
   }
 
   render() {
