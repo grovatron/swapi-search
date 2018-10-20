@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FilmsList from '../../components/FilmsList';
 
 const SWAPI_BASE = 'https://swapi.co/api/';
 
@@ -72,12 +73,7 @@ class Search extends Component {
           type='text'
           placeholder='Search films, people, planets, etc.'
           onChange={this.onSearchInputChange} />
-        <p>films length: {films.length}</p>
-        <p>people length: {people.length}</p>
-        <p>planets length: {planets.length}</p>
-        <p>species length: {species.length}</p>
-        <p>starships length: {starships.length}</p>
-        <p>vehicles length: {vehicles.length}</p>
+        <FilmsList films={films}/>
       </div>
     )
   }
