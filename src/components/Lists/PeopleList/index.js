@@ -1,8 +1,8 @@
 import React from 'react';
 
-function sortAlph(personA, personB) {
-  if (personA.name < personB.name) return -1
-  if (personA.name > personB.name) return 1
+function sortByNameAlph(a, b) {
+  if (a.name < b.name) return -1
+  if (a.name > b.name) return 1
   return 0;
 }
 
@@ -16,7 +16,7 @@ const PeopleList = props => (
   <div>
     <h3>People</h3>
     <ul className='list'>
-      {props.people.sort((a,b) => sortAlph(a,b))
+      {props.people.sort((a,b) => sortByNameAlph(a,b))
         .map(person => (
           <PeopleListItem person={person} key={person.name} />
         ))}

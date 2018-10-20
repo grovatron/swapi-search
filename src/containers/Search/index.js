@@ -80,10 +80,10 @@ class Search extends Component {
           onChange={this.onSearchInputChange} />
         <FilmsList films={films}/>
         <PeopleList people={people}/>
-        <PlanetsList />
-        <SpeciesList />
-        <StarshipsList />
-        <VehiclesList />
+        <PlanetsList planets={planets}/>
+        <SpeciesList species={species}/>
+        <StarshipsList starships={starships}/>
+        <VehiclesList vehicles={vehicles}/>
       </div>
     )
   }
