@@ -18,36 +18,59 @@ class Search extends Component {
     starships: [],
     vehicles: [],
     searchValue: '',
+    isFetching: false,
   }
 
-  // componentDidMount() {
-  //   fetch(`${SWAPI_BASE}films/?search=l`)
-  //     .then(response => response.json())
-  //     .then(json => this.setState({films: json.results}));
-  // }
-
 //TODO:Fix bugs associated with slow fetching
-  onSearchInputChange = event => {
-    this.setState({searchValue: event.target.value});
+  onSearchInputChange = async(event) => {
+    this.setState({searchValue: event.target.value, isFetching: true});
     if (event.target.value !== '') {
-      fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({films: json.results}));
-      fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({people: json.results}));
-      fetch(`${SWAPI_BASE}planets/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({planets: json.results}));
-      fetch(`${SWAPI_BASE}species/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({species: json.results}));
-      fetch(`${SWAPI_BASE}starships/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({starships: json.results}));
-      fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
-        .then(response => response.json())
-        .then(json => this.setState({vehicles: json.results}));
+      try {
+        let allResponses = await Promise.all([
+          fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
+          .then(response => response.json()),
+          fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
+          .then(response => response.json()),
+          fetch(`${SWAPI_BASE}planets/?search=${event.target.value}`)
+          .then(response => response.json()),
+          fetch(`${SWAPI_BASE}species/?search=${event.target.value}`)
+          .then(response => response.json()),
+          fetch(`${SWAPI_BASE}starships/?search=${event.target.value}`)
+          .then(response => response.json()),
+          fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
+          .then(response => response.json())
+        ]);
+        let [ films, people, planets, species, starships, vehicles ] = await allResponses;
+        this.setState({
+          films: films.results,
+          people: people.results,
+          planets: planets.results,
+          species: species.results,
+          starships: starships.results,
+          vehicles: vehicles.results,
+          isFetching: false
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      // fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({films: json.results}));
+      // fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({people: json.results}));
+      // fetch(`${SWAPI_BASE}planets/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({planets: json.results}));
+      // fetch(`${SWAPI_BASE}species/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({species: json.results}));
+      // fetch(`${SWAPI_BASE}starships/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({starships: json.results}));
+      // fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
+      //   .then(response => response.json())
+      //   .then(json => this.setState({vehicles: json.results}));
     } else {
       this.setState({
         films: [],
@@ -56,6 +79,7 @@ class Search extends Component {
         species: [],
         starships: [],
         vehicles: [],
+        isFetching: false,
       }
     );
     }
@@ -69,7 +93,8 @@ class Search extends Component {
       species,
       starships,
       vehicles,
-      searchValue
+      searchValue,
+      isFetching
     } = this.state;
     return(
       <div>
@@ -79,12 +104,19 @@ class Search extends Component {
           type='text'
           placeholder='Search films, people, planets, etc.'
           onChange={this.onSearchInputChange} />
-        {films.length !== 0 && <FilmsList films={films}/>}
-        {people.length !== 0 && <PeopleList people={people}/>}
-        {planets.length !== 0 && <PlanetsList planets={planets}/>}
-        {species.length !== 0 && <SpeciesList species={species}/>}
-        {starships.length !== 0 && <StarshipsList starships={starships}/>}
-        {vehicles.length !== 0 && <VehiclesList vehicles={vehicles}/>}
+        {isFetching && <p>Loading... </p>}
+        {
+          !isFetching &&
+          <div>
+            {films.length !== 0 && <FilmsList films={films}/>}
+            {people.length !== 0 && <PeopleList people={people}/>}
+            {planets.length !== 0 && <PlanetsList planets={planets}/>}
+            {species.length !== 0 && <SpeciesList species={species}/>}
+            {starships.length !== 0 && <StarshipsList starships={starships}/>}
+            {vehicles.length !== 0 && <VehiclesList vehicles={vehicles}/>}
+          </div>
+        }
+
       </div>
     )
   }
