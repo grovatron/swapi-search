@@ -22,9 +22,13 @@ class Search extends Component {
 
   onSearchInputChange = event => {
     this.setState({searchValue: event.target.value});
-    fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
-      .then(response => response.json())
-      .then(json => this.setState({films: json.results}));
+    if (event.target.value !== '') {
+      fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
+        .then(response => response.json())
+        .then(json => this.setState({films: json.results}));
+    } else {
+      this.setState({films: []});
+    }
   }
 
   render() {
