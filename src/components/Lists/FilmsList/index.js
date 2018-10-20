@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import '../lists.css';
 
 function sortByDate(filmA, filmB) {
   if (filmA.release_date < filmB.release_date) return -1;
@@ -16,7 +16,7 @@ const FilmsListItem = (props) => (
 const FilmsList = (props) => (
   <div>
     <h3>Films</h3>
-    <ul className='film-list'>
+    <ul className='list'>
       {
         props.films.sort((a,b) => sortByDate(a,b))
           .map(film => (
