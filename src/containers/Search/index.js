@@ -27,7 +27,7 @@ class Search extends Component {
     this.setState({searchValue: event.target.value, isFetching: true});
     if (event.target.value !== '') {
       try {
-        let allResponses = await Promise.all([
+        let [ films, people, planets, species, starships, vehicles ] = await Promise.all([
           fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
           .then(response => response.json()),
           fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
@@ -41,7 +41,7 @@ class Search extends Component {
           fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
           .then(response => response.json())
         ]);
-        let [ films, people, planets, species, starships, vehicles ] = await allResponses;
+        // let [ films, people, planets, species, starships, vehicles ] = await allResponses;
         this.setState({
           films: films.results,
           people: people.results,
