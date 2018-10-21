@@ -25,38 +25,42 @@ class Search extends Component {
     }
   }
 
+  async fetchData(event) {
+    try {
+      let [ films, people, planets, species, starships, vehicles ] = await Promise.all([
+        fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
+        .then(response => response.json()),
+        fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
+        .then(response => response.json()),
+        fetch(`${SWAPI_BASE}planets/?search=${event.target.value}`)
+        .then(response => response.json()),
+        fetch(`${SWAPI_BASE}species/?search=${event.target.value}`)
+        .then(response => response.json()),
+        fetch(`${SWAPI_BASE}starships/?search=${event.target.value}`)
+        .then(response => response.json()),
+        fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
+        .then(response => response.json())
+      ]);
+      // let [ films, people, planets, species, starships, vehicles ] = await allResponses;
+      this.setState({
+        films: films.results,
+        people: people.results,
+        planets: planets.results,
+        species: species.results,
+        starships: starships.results,
+        vehicles: vehicles.results,
+        isFetching: false
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 //TODO:Fix bugs associated with slow fetching
   onSearchInputChange = async(event) => {
     this.setState({searchValue: event.target.value, isFetching: true});
     if (event.target.value !== '') {
-      try {
-        let [ films, people, planets, species, starships, vehicles ] = await Promise.all([
-          fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
-          .then(response => response.json()),
-          fetch(`${SWAPI_BASE}people/?search=${event.target.value}`)
-          .then(response => response.json()),
-          fetch(`${SWAPI_BASE}planets/?search=${event.target.value}`)
-          .then(response => response.json()),
-          fetch(`${SWAPI_BASE}species/?search=${event.target.value}`)
-          .then(response => response.json()),
-          fetch(`${SWAPI_BASE}starships/?search=${event.target.value}`)
-          .then(response => response.json()),
-          fetch(`${SWAPI_BASE}vehicles/?search=${event.target.value}`)
-          .then(response => response.json())
-        ]);
-        // let [ films, people, planets, species, starships, vehicles ] = await allResponses;
-        this.setState({
-          films: films.results,
-          people: people.results,
-          planets: planets.results,
-          species: species.results,
-          starships: starships.results,
-          vehicles: vehicles.results,
-          isFetching: false
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      this.fetchData(event);
       // fetch(`${SWAPI_BASE}films/?search=${event.target.value}`)
       //   .then(response => response.json())
       //   .then(json => this.setState({films: json.results}));
