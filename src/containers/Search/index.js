@@ -11,15 +11,18 @@ const SWAPI_BASE = 'https://swapi.co/api/';
 
 class Search extends Component {
 
-  state = {
-    films: [],
-    people: [],
-    planets: [],
-    species: [],
-    starships: [],
-    vehicles: [],
-    searchValue: '',
-    isFetching: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      films: [],
+      people: [],
+      planets: [],
+      species: [],
+      starships: [],
+      vehicles: [],
+      searchValue: '',
+      isFetching: false,
+    }
   }
 
 //TODO:Fix bugs associated with slow fetching
