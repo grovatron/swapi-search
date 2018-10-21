@@ -57,7 +57,6 @@ class Search extends Component {
     }
   }
 
-//TODO:Fix bugs associated with slow fetching
   onSearchInputChange = async(event) => {
     const searchTerm = event.target.value;
     this.setState({searchValue: searchTerm, isFetching: true});
