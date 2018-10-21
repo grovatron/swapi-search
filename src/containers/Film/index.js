@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../../components/Loader';
+import FilmInfo from '../../components/Info/FilmInfo'
 
 class Film extends Component {
   constructor(props) {
@@ -21,7 +22,11 @@ class Film extends Component {
     return (
       <div>
         {characters === null && <Loader />}
-        {characters !== null && <p>{characters[0]}</p>}
+        {
+          characters !== null
+          &&
+          <FilmInfo film={this.props.location.state} characters={characters}/>
+        }
       </div>
     )
   }
