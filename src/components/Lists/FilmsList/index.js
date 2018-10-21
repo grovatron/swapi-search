@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../lists.css';
 
 function sortByDate(filmA, filmB) {
@@ -9,7 +10,9 @@ function sortByDate(filmA, filmB) {
 
 const FilmsListItem = (props) => (
   <li>
-    {`${props.film.title}, ${props.film.release_date.substring(0,4)}`}
+    <Link to={{pathname: `/films/${props.film.episode_id}`, state: props.film}}>
+      {`${props.film.title}, ${props.film.release_date.substring(0,4)}`}
+    </Link>
   </li>
 )
 
